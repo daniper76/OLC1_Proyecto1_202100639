@@ -15,6 +15,10 @@ public class graficar {
     public static String tituloybarras = "";
     public static LinkedList<String> ejeybarras = new LinkedList<>();
     public static LinkedList<String> ejexbarras = new LinkedList<>();
+    public static String tituloPie = "";
+    public static LinkedList<String> valoresPie = new LinkedList<>();
+    public static LinkedList<String> labelPie = new LinkedList<>();
+    
     
     public static void barras(
             String Titulo, 
@@ -24,7 +28,6 @@ public class graficar {
             LinkedList<String> ejex
     )
     {
-        //Ingreso de datos
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         
         for(int i = 0; i < ejey.size() && i < ejex.size(); i++) {
@@ -32,15 +35,13 @@ public class graficar {
             String valorEjex = String.valueOf(ejex.get(i));
             dataset.addValue(valorEjey, "Valor", valorEjex);
         }
-        // Creación de gráfica
         JFreeChart grafica = 
             ChartFactory.createBarChart(
-                Titulo, //TITULO
+                Titulo, 
                 TituloX, TituloY, 
                 dataset, 
                 PlotOrientation.VERTICAL,
                 true, true, true);
-        // Mostrar
         ChartFrame frame = new ChartFrame("Ejemplo", grafica);
         frame.pack();
         frame.setVisible(true);
@@ -54,7 +55,6 @@ public class graficar {
             LinkedList<String> ejex
     )
     {
-        //Ingreso de datos
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         
         for(int i = 0; i < ejey.size() && i < ejex.size(); i++) {
@@ -63,7 +63,6 @@ public class graficar {
             dataset.addValue(valorEjey, "Valor", valorEjex);
         }
         
-        // Creación de gráfica
         JFreeChart grafica = 
             ChartFactory.createLineChart(
                     Titulo, 
@@ -72,7 +71,6 @@ public class graficar {
                     dataset);
         
         
-        // Mostrar
         ChartFrame frame = new ChartFrame("Ejemplo", grafica);
         frame.pack();
         frame.setVisible(true);
@@ -81,24 +79,24 @@ public class graficar {
     
     public static void Pie(
             String Titulo, 
-            String TituloX,
-            String TituloY,
-            double valores[],
-            String ejex []
+            LinkedList<String> valores,
+            LinkedList<String> labels
     )
     {
-        //Ingreso de datos
+
         DefaultPieDataset dataset = new DefaultPieDataset( );
       
-        for(int i = 0; i < 5; i++){
-            dataset.setValue(ejex[i], valores[i]);
+        for(int i = 0; i < valores.size() && i < labels.size(); i++) {
+            Double valor = Double.parseDouble(valores.get(i));
+            String label = String.valueOf(labels.get(i));
+            dataset.setValue(label,valor);
         }
-        // Creación de gráfica
+  
         JFreeChart grafica = 
             ChartFactory.createPieChart(Titulo, dataset);
         
         
-        // Mostrar
+        
         ChartFrame frame = new ChartFrame("Ejemplo", grafica);
         frame.pack();
         frame.setVisible(true);
@@ -121,6 +119,15 @@ public class graficar {
         ejexbarras=(LinkedList<String>) arreglo;
     }
         
+    public static void AgregarTituloPie(String valor){
+        tituloPie=valor;
+    }
+    public static void AgregarValoresPie(LinkedList<String> arreglo){
+        valoresPie=(LinkedList<String>) arreglo;
+    }
     
+    public static void AgregarLabelsPie(LinkedList<String> arreglo){
+        labelPie=(LinkedList<String>) arreglo;
+    }
     
 }

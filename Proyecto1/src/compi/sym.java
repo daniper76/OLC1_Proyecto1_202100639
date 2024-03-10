@@ -14,6 +14,7 @@ public class sym {
   public static final int ENTERO = 7;
   public static final int DOUBLE = 17;
   public static final int RESTA = 28;
+  public static final int PIE = 49;
   public static final int TITULOY = 46;
   public static final int TITULOX = 45;
   public static final int EJEY = 44;
@@ -36,12 +37,14 @@ public class sym {
   public static final int FLECHADERECHA = 20;
   public static final int COMA = 11;
   public static final int CADENA = 8;
+  public static final int VALUES = 51;
   public static final int MODULO = 31;
   public static final int MENOR = 37;
   public static final int MODA = 34;
   public static final int MAYOR = 36;
   public static final int FLECHA = 19;
   public static final int DIVIDIR = 30;
+  public static final int GRAPPIE = 52;
   public static final int VARIANZA = 35;
   public static final int GRAPBAR = 48;
   public static final int END = 22;
@@ -51,6 +54,7 @@ public class sym {
   public static final int EXEC = 47;
   public static final int PARDER = 4;
   public static final int CORA = 25;
+  public static final int LABEL = 50;
   public static final int COLUMNA = 40;
   public static final int VAR = 15;
   public static final int PRINT = 39;
@@ -106,7 +110,11 @@ public class sym {
   "TITULOX",
   "TITULOY",
   "EXEC",
-  "GRAPBAR"
+  "GRAPBAR",
+  "PIE",
+  "LABEL",
+  "VALUES",
+  "GRAPPIE"
   };
 }
 

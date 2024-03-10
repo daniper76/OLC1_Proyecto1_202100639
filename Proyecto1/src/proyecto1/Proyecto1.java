@@ -16,6 +16,13 @@ public class Proyecto1 {
         //analizadores("src/compi/", "Lexer.jflex", "Parser.cup");
         String entrada = """
                      PROGRAM
+                        graphPie(
+                         label::char[] = ["Uno", "Dos", "Tres"] end;
+                         values::double = [50, 30, 20] end;
+                         titulo::char[] = "Ejemplo Gráfica de Pie" end;
+                         titulo::char[] = "Pie" end;
+                         EXEC grapPie end;
+                         ) end; 
                         PRintln!(Media([5, 2, SUM(3,7), 4, 6]));
                         var:double::promedio<-Media([5, 2, SUM(3,7), 4, 6])end;
                         var:double::numero<-SUM(2222,3)end;

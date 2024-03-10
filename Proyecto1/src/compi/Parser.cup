@@ -40,13 +40,14 @@ terminal String ARR, ARROBA,CORA,CORC,SUMA;
 terminal String RESTA,MULTIPLICAR,DIVIDIR,MODULO,MEDIA;
 terminal String MEDIANA,MODA,VARIANZA,MAYOR,MENOR,CONSOLE,PRINT,COLUMNA,BARRAS, TITULO;
 terminal String EJEX,EJEY,TITULOX,TITULOY,EXEC,GRAPBAR;
+terminal String PIE,LABEL,VALUES,GRAPPIE;
 
 
 //------> Declaración de no terminales
 non terminal inicio;
 non terminal instruccion, expresion;
 non terminal lista_instrucciones, print, variable,conjunto,elementos, tipo;
-non terminal datos, imprimir, listaexpresiones, listaarreglo,graficar,sentencias,linea;
+non terminal datos, imprimir, listaexpresiones, listaarreglo,graficar,sentencias,linea,sentenciaspie,lineapie;
 precedence left MAS;
 
 //------> Definir Simbolo Inicial
@@ -168,6 +169,10 @@ graficar::= BARRAS PARIZQ sentencias EXEC GRAPBAR END PYC PARDER END PYC
         {:
         graficas.graficar.barras(graficas.graficar.titulobarras, graficas.graficar.tituloxbarras, graficas.graficar.tituloybarras, graficas.graficar.ejeybarras,graficas.graficar.ejexbarras);
         :}
+        | PIE PARIZQ sentenciaspie EXEC GRAPPIE END PYC PARDER END PYC
+        {:
+        graficas.graficar.Pie(graficas.graficar.tituloPie, graficas.graficar.valoresPie, graficas.graficar.labelPie);
+        :}
 
 ;
 
@@ -181,6 +186,17 @@ linea::= TITULO DOSPUNTOS DOSPUNTOS CHAR IGUAL expresion:title END PYC {: grafic
         | TITULOX DOSPUNTOS DOSPUNTOS CHAR IGUAL expresion:entrada END PYC {: graficas.graficar.AgregarTituloXBarras(entrada.toString()); :}
         | TITULOY DOSPUNTOS DOSPUNTOS CHAR IGUAL expresion:valor END PYC {: graficas.graficar.AgregarTituloYBarras(valor.toString()); :}
 ;
+
+sentenciaspie::=sentenciaspie lineapie
+               |lineapie
+;
+
+lineapie::= LABEL DOSPUNTOS DOSPUNTOS CHAR IGUAL CORA listaexpresiones:lista CORC END PYC {: graficas.graficar.AgregarLabelsPie((LinkedList<String>) lista); :}
+        | VALUES DOSPUNTOS DOSPUNTOS DOUBLE IGUAL CORA listaexpresiones:lista CORC END PYC {: graficas.graficar.AgregarValoresPie((LinkedList<String>) lista); :}
+        | TITULO DOSPUNTOS DOSPUNTOS CHAR IGUAL expresion:entrada END PYC {: graficas.graficar.AgregarTituloPie(entrada.toString()); :}
+;
+
+
 
 
 
