@@ -41,6 +41,7 @@ terminal String RESTA,MULTIPLICAR,DIVIDIR,MODULO,MEDIA;
 terminal String MEDIANA,MODA,VARIANZA,MAYOR,MENOR,CONSOLE,PRINT,COLUMNA,BARRAS, TITULO;
 terminal String EJEX,EJEY,TITULOX,TITULOY,EXEC,GRAPBAR;
 terminal String PIE,LABEL,VALUES,GRAPPIE;
+terminal String LINEAL,GRAPLINE;
 
 
 //------> Declaración de no terminales
@@ -48,6 +49,7 @@ non terminal inicio;
 non terminal instruccion, expresion;
 non terminal lista_instrucciones, print, variable,conjunto,elementos, tipo;
 non terminal datos, imprimir, listaexpresiones, listaarreglo,graficar,sentencias,linea,sentenciaspie,lineapie;
+non terminal sentenciaslineal,linealineal;
 precedence left MAS;
 
 //------> Definir Simbolo Inicial
@@ -173,7 +175,10 @@ graficar::= BARRAS PARIZQ sentencias EXEC GRAPBAR END PYC PARDER END PYC
         {:
         graficas.graficar.Pie(graficas.graficar.tituloPie, graficas.graficar.valoresPie, graficas.graficar.labelPie);
         :}
-
+        | LINEAL PARIZQ sentenciaslineal EXEC GRAPLINE END PYC PARDER END PYC
+        {:
+        graficas.graficar.Lineal(graficas.graficar.titulolineal, graficas.graficar.tituloxlineal, graficas.graficar.tituloylineal,graficas.graficar.ejeylineal, graficas.graficar.ejexlineal);
+        :}
 ;
 
 sentencias::= sentencias linea
@@ -196,7 +201,13 @@ lineapie::= LABEL DOSPUNTOS DOSPUNTOS CHAR IGUAL CORA listaexpresiones:lista COR
         | TITULO DOSPUNTOS DOSPUNTOS CHAR IGUAL expresion:entrada END PYC {: graficas.graficar.AgregarTituloPie(entrada.toString()); :}
 ;
 
+sentenciaslineal::=sentenciaslineal linealineal
+               |linealineal
+;
 
-
-
-
+linealineal::= TITULO DOSPUNTOS DOSPUNTOS CHAR IGUAL expresion:title END PYC {: graficas.graficar.AgregarTituloLineal(title.toString());  :}
+        | EJEX DOSPUNTOS DOSPUNTOS CHAR IGUAL CORA listaexpresiones:lista CORC END PYC {: graficas.graficar.AgregarEjeXLineal((LinkedList<String>) lista); :}
+        | EJEY DOSPUNTOS DOSPUNTOS DOUBLE IGUAL CORA listaexpresiones:lista CORC END PYC {: graficas.graficar.AgregarEjeYLineal((LinkedList<String>) lista); :}
+        | TITULOX DOSPUNTOS DOSPUNTOS CHAR IGUAL expresion:entrada END PYC {: graficas.graficar.AgregarTituloXLineal(entrada.toString()); :}
+        | TITULOY DOSPUNTOS DOSPUNTOS CHAR IGUAL expresion:valor END PYC {: graficas.graficar.AgregarTituloYLineal(valor.toString()); :}
+;

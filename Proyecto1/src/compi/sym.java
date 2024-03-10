@@ -16,6 +16,7 @@ public class sym {
   public static final int RESTA = 28;
   public static final int PIE = 49;
   public static final int TITULOY = 46;
+  public static final int LINEAL = 53;
   public static final int TITULOX = 45;
   public static final int EJEY = 44;
   public static final int RPRINT = 2;
@@ -57,6 +58,7 @@ public class sym {
   public static final int LABEL = 50;
   public static final int COLUMNA = 40;
   public static final int VAR = 15;
+  public static final int GRAPLINE = 54;
   public static final int PRINT = 39;
   public static final int CONSOLE = 38;
   public static final int PYC = 6;
@@ -114,7 +116,9 @@ public class sym {
   "PIE",
   "LABEL",
   "VALUES",
-  "GRAPPIE"
+  "GRAPPIE",
+  "LINEAL",
+  "GRAPLINE"
   };
 }
 

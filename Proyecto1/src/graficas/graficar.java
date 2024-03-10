@@ -18,6 +18,11 @@ public class graficar {
     public static String tituloPie = "";
     public static LinkedList<String> valoresPie = new LinkedList<>();
     public static LinkedList<String> labelPie = new LinkedList<>();
+    public static String titulolineal ="";
+    public static String tituloxlineal = "";
+    public static String tituloylineal = "";
+    public static LinkedList<String> ejeylineal = new LinkedList<>();
+    public static LinkedList<String> ejexlineal = new LinkedList<>();
     
     
     public static void barras(
@@ -47,7 +52,7 @@ public class graficar {
         frame.setVisible(true);
     }
     
-    public static void linea(
+    public static void Lineal(
             String Titulo, 
             String TituloX,
             String TituloY,
@@ -128,6 +133,23 @@ public class graficar {
     
     public static void AgregarLabelsPie(LinkedList<String> arreglo){
         labelPie=(LinkedList<String>) arreglo;
+    }
+    
+    public static void AgregarTituloLineal(String valor){
+        titulolineal=valor;
+    }
+    public static void AgregarTituloXLineal(String valor){
+        tituloxlineal=valor;
+    }
+    public static void AgregarTituloYLineal(String valor){
+        tituloylineal=valor;
+    }
+    public static void AgregarEjeYLineal(LinkedList<String> arreglo){
+        ejeylineal=(LinkedList<String>) arreglo;
+    }
+    
+    public static void AgregarEjeXLineal(LinkedList<String> arreglo){
+        ejexlineal=(LinkedList<String>) arreglo;
     }
     
 }

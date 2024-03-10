@@ -33,6 +33,14 @@ public class Proyecto1 {
                          var:double::num15<-Max([5, 2, SUM(3,7), 4, 6])end;
                          var:double::num16<-Min([5, 2, SUM(3,7), 4, 6])end;
                         var:char[]::gato<-"perrito"end;
+                         graphLine(
+                                                  titulo::char[] = "Estudiantes" end;
+                                                  ejeX::char[] = ["1 Parcial", "2 parcial", "Final"] end;
+                                                  ejeY::double = [50, 30, 70] end;
+                                                  tituloX::char[] = "Actividades" end;
+                                                  tituloY::char[] = "Notas" end;
+                                                  EXEC grapLine end;
+                                                  ) end;
                          var:double::nota<-61end;
                          var:char[]::gatillo<-"per"end;
                          var:double::num1<-nota end;
