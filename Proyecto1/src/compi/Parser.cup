@@ -1,0 +1,186 @@
+// ------------  Paquete e importaciones ------------
+package compi;
+
+import java_cup.runtime.*;
+import java.util.LinkedList;
+
+
+//------> Codigo para el parser
+//------> Declaracion de variables, funciones y funciones de error
+
+parser code 
+{:
+    public String resultado = ""; 
+
+    public void syntax_error(Symbol s)
+    {
+            System.err.println("Error Sintactico: "+ s.value + " - Fila: " + s.right + " - Columna: " + s.left + ". Recuperado" );
+    }
+
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception
+    {
+            System.err.println("Error Sintactico: "+ s.value + " - Fila: " + s.right + " - Columna: " + s.left + ". Sin recuperacion." );
+    }
+
+:}
+
+
+//------> Codigo para las acciones gramaticales (no tocar)
+action code
+{:  :}
+
+
+//------> Declaración de terminales
+terminal String RPRINT;
+terminal String EXCL, PARDER, PARIZQ, PYC;
+terminal String ENTERO, CADENA, MAS, ID, COMA, IGUAL;
+terminal String PROGRAM, ENDPROGRAM, VAR, DOSPUNTOS, DOUBLE, CHAR;
+terminal String FLECHA, FLECHADERECHA, GUION, END;
+terminal String ARR, ARROBA,CORA,CORC,SUMA;
+terminal String RESTA,MULTIPLICAR,DIVIDIR,MODULO,MEDIA;
+terminal String MEDIANA,MODA,VARIANZA,MAYOR,MENOR,CONSOLE,PRINT,COLUMNA,BARRAS, TITULO;
+terminal String EJEX,EJEY,TITULOX,TITULOY,EXEC,GRAPBAR;
+
+
+//------> Declaración de no terminales
+non terminal inicio;
+non terminal instruccion, expresion;
+non terminal lista_instrucciones, print, variable,conjunto,elementos, tipo;
+non terminal datos, imprimir, listaexpresiones, listaarreglo,graficar,sentencias,linea;
+precedence left MAS;
+
+//------> Definir Simbolo Inicial
+start with inicio; 
+
+
+
+// ------------>  Producciones  <------------
+
+inicio ::= PROGRAM lista_instrucciones ENDPROGRAM
+
+;
+
+lista_instrucciones ::= lista_instrucciones instruccion |
+                      instruccion 
+;
+instruccion ::= print|
+                variable|
+                conjunto|
+                imprimir|
+                graficar|
+                error PYC
+
+;
+
+conjunto::= ARR DOSPUNTOS tipo DOSPUNTOS DOSPUNTOS ARROBA ID:variable FLECHA GUION CORA elementos:lista CORC END PYC
+     {:
+        instrucciones.instruccion.mostrarLista((LinkedList<String>) lista);
+        instrucciones.instruccion.GuardarArreglo(variable,(LinkedList<String>) lista);
+      :}
+;
+
+elementos::= elementos:listaexp COMA expresion:exp
+             {:  
+            LinkedList<String> lista = (LinkedList<String>) listaexp;
+            lista.add(exp.toString());
+            RESULT = lista;
+            :}
+
+            | expresion:exp
+            {: 
+            LinkedList<String> lista = new LinkedList<>();
+            lista.add(exp.toString());
+            RESULT = lista;
+            :}
+;
+
+
+datos::= datos:listadatos COMA expresion:exp
+             {:  
+            LinkedList<String> lista = (LinkedList<String>) listadatos;
+            lista.add(exp.toString());
+            RESULT = lista;
+            :}
+
+            | expresion:exp
+            {: 
+            LinkedList<String> lista = new LinkedList<>();
+            lista.add(exp.toString());
+            RESULT = lista;
+            :}
+;
+
+variable ::= VAR DOSPUNTOS tipo DOSPUNTOS DOSPUNTOS ID:variable FLECHA GUION expresion:valor END PYC {:instrucciones.instruccion.GuardarVariable(variable.toString(), valor.toString());:}
+;
+
+tipo::= DOUBLE {:RESULT="double";:}
+        |CHAR {:RESULT="char";:}
+;
+print::= RPRINT EXCL PARIZQ expresion:val PARDER PYC {: System.out.println(val); :}
+         | RPRINT EXCL PARIZQ ARROBA ID:clave PARDER PYC {: instrucciones.instruccion.mostrarLista((LinkedList<String>) instrucciones.instruccion.ObtenerArreglo(clave)); :}
+
+;
+expresion ::= ENTERO:val {:RESULT=val.toString();:}
+             |CADENA:val {:RESULT=val.toString();:}
+             |ID:val            {: RESULT = instrucciones.instruccion.ObtenerVariable(val.toString()); :}
+             |SUMA PARIZQ expresion:val1 COMA expresion:val2 PARDER {: RESULT=operacion.operaciones.Suma(val1.toString(), val2.toString()); :}
+             |RESTA PARIZQ expresion:val1 COMA expresion:val2 PARDER {: RESULT=operacion.operaciones.Resta(val1.toString(), val2.toString()); :}
+             |MULTIPLICAR PARIZQ expresion:val1 COMA expresion:val2 PARDER {: RESULT=operacion.operaciones.Multiplicar(val1.toString(), val2.toString()); :} 
+             |DIVIDIR PARIZQ expresion:val1 COMA expresion:val2 PARDER {: RESULT=operacion.operaciones.Dividir(val1.toString(), val2.toString()); :}
+             |MODULO PARIZQ expresion:val1 COMA expresion:val2 PARDER {: RESULT=operacion.operaciones.Modulo(val1.toString(), val2.toString()); :} 
+             |MEDIA PARIZQ CORA datos:lista CORC PARDER {: RESULT=operacion.operaciones.Media((LinkedList<String>)lista); :}
+             |MEDIANA PARIZQ CORA datos:lista CORC PARDER {: RESULT=operacion.operaciones.Mediana((LinkedList<String>)lista); :}
+             |MODA PARIZQ CORA datos:lista CORC PARDER {: RESULT=operacion.operaciones.Moda((LinkedList<String>)lista); :}
+             |VARIANZA PARIZQ CORA datos:lista CORC PARDER {: RESULT=operacion.operaciones.Varianza((LinkedList<String>)lista); :}
+             |MAYOR PARIZQ CORA datos:lista CORC PARDER {: RESULT=operacion.operaciones.Mayor((LinkedList<String>)lista); :}
+             |MENOR PARIZQ CORA datos:lista CORC PARDER {: RESULT=operacion.operaciones.Menor((LinkedList<String>)lista); :}
+;
+
+imprimir::= CONSOLE DOSPUNTOS DOSPUNTOS PRINT IGUAL listaexpresiones:lista END PYC 
+            {: instrucciones.instruccion.mostrarLista((LinkedList<String>) lista); :}
+            | CONSOLE DOSPUNTOS DOSPUNTOS COLUMNA IGUAL expresion:val GUION FLECHADERECHA listaarreglo:lista END PYC 
+            {: 
+               System.out.println(val);
+               System.out.println("------------------------");
+               instrucciones.instruccion.mostrarLista((LinkedList<String>) lista); 
+            :}
+;
+listaarreglo::= ARROBA ID:clave {: RESULT= (LinkedList<String>) instrucciones.instruccion.ObtenerArreglo(clave); :}
+             | CORA listaexpresiones:lista CORC {: RESULT=(LinkedList<String>) lista; :}
+
+;
+
+listaexpresiones::= listaexpresiones:listaexp COMA expresion:exp
+             {:  
+            LinkedList<String> lista = (LinkedList<String>) listaexp;
+            lista.add(exp.toString());
+            RESULT = lista;
+            :}
+            | expresion:exp
+            {: 
+            LinkedList<String> lista = new LinkedList<>();
+            lista.add(exp.toString());
+            RESULT = lista;
+            :}
+;
+
+graficar::= BARRAS PARIZQ sentencias EXEC GRAPBAR END PYC PARDER END PYC
+        {:
+        graficas.graficar.barras(graficas.graficar.titulobarras, graficas.graficar.tituloxbarras, graficas.graficar.tituloybarras, graficas.graficar.ejeybarras,graficas.graficar.ejexbarras);
+        :}
+
+;
+
+sentencias::= sentencias linea
+            | linea 
+;
+
+linea::= TITULO DOSPUNTOS DOSPUNTOS CHAR IGUAL expresion:title END PYC {: graficas.graficar.AgregarTituloBarras(title.toString()); :}
+        | EJEX DOSPUNTOS DOSPUNTOS CHAR IGUAL CORA listaexpresiones:lista CORC END PYC {: graficas.graficar.AgregarEjeXBarras((LinkedList<String>) lista); :}
+        | EJEY DOSPUNTOS DOSPUNTOS DOUBLE IGUAL CORA listaexpresiones:lista CORC END PYC {: graficas.graficar.AgregarEjeYBarras((LinkedList<String>) lista); :}
+        | TITULOX DOSPUNTOS DOSPUNTOS CHAR IGUAL expresion:entrada END PYC {: graficas.graficar.AgregarTituloXBarras(entrada.toString()); :}
+        | TITULOY DOSPUNTOS DOSPUNTOS CHAR IGUAL expresion:valor END PYC {: graficas.graficar.AgregarTituloYBarras(valor.toString()); :}
+;
+
+
+
