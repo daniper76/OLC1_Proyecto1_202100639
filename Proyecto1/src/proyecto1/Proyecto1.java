@@ -54,6 +54,11 @@ public class Proyecto1 {
                          PRintln!(num11);
                          PRintln!(num12);
                          PRintln!(num13);
+                         Histogram(
+                                                  values::char[]= [2,2,2,5,5,7,8] end;
+                                                  titulo::char[] = "Analisis de Arreglo" end;
+                                                  EXEC Histogram end;
+                                                  ) end;
                          PRintln!(num15);
                          PRintln!(num16);
                          PRintln!(perro);
@@ -72,7 +77,6 @@ public class Proyecto1 {
                     """;
         
         analizar(entrada);
-        
         
     }
     

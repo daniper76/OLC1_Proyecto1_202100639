@@ -58,6 +58,7 @@ comentario = ["#"][^\n]*[\n]
 "exec"      {return new Symbol(sym.EXEC, yycolumn, yyline, yytext());}
 "grapbar"   {return new Symbol(sym.GRAPBAR, yycolumn, yyline, yytext());}
 "mediana"   {return new Symbol(sym.MEDIANA, yycolumn, yyline, yytext());}
+"histogram" {return new Symbol(sym.HISTOGRAMA, yycolumn, yyline, yytext());}
 "moda"      {return new Symbol(sym.MODA, yycolumn, yyline, yytext());}
 "varianza"  {return new Symbol(sym.VARIANZA, yycolumn, yyline, yytext());}
 "max"       {return new Symbol(sym.MAYOR, yycolumn, yyline, yytext());}

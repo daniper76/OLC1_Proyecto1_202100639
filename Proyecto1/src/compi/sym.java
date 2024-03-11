@@ -28,6 +28,7 @@ public class sym {
   public static final int ENDPROGRAM = 14;
   public static final int GUION = 21;
   public static final int SUMA = 27;
+  public static final int HISTOGRAMA = 55;
   public static final int ID = 10;
   public static final int EXCL = 3;
   public static final int MEDIANA = 33;
@@ -118,7 +119,8 @@ public class sym {
   "VALUES",
   "GRAPPIE",
   "LINEAL",
-  "GRAPLINE"
+  "GRAPLINE",
+  "HISTOGRAMA"
   };
 }
 

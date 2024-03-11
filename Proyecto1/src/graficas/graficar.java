@@ -1,6 +1,7 @@
 package graficas;
 
 import java.util.LinkedList;
+import java.util.Objects;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
 import org.jfree.chart.JFreeChart;
@@ -23,6 +24,13 @@ public class graficar {
     public static String tituloylineal = "";
     public static LinkedList<String> ejeylineal = new LinkedList<>();
     public static LinkedList<String> ejexlineal = new LinkedList<>();
+    public static LinkedList<Double> valoresHistograma = new LinkedList<>();
+    public static LinkedList<Double> frecuenciaHistograma = new LinkedList<>();
+    public static LinkedList<Double> frecuenciaAcumulada = new LinkedList<>();
+    public static LinkedList<Integer> frecuenciaRelativa = new LinkedList<>();
+    public static String tituloHistograma = "";
+    public static String tituloHistogramaX = " ";
+    public static String tituloHistogramaY= " ";
     
     
     public static void barras(
@@ -39,6 +47,33 @@ public class graficar {
             Double valorEjey = Double.parseDouble(ejey.get(i));
             String valorEjex = String.valueOf(ejex.get(i));
             dataset.addValue(valorEjey, "Valor", valorEjex);
+        }
+        JFreeChart grafica = 
+            ChartFactory.createBarChart(
+                Titulo, 
+                TituloX, TituloY, 
+                dataset, 
+                PlotOrientation.VERTICAL,
+                true, true, true);
+        ChartFrame frame = new ChartFrame("Ejemplo", grafica);
+        frame.pack();
+        frame.setVisible(true);
+    }
+    
+    
+    public static void histograma(
+            String Titulo, 
+            String TituloX,
+            String TituloY,
+            LinkedList<Double> ejey,
+            LinkedList<Double> ejex
+    )
+    {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        
+        for(int i = 0; i < ejey.size() && i < ejex.size(); i++) {
+            String valorEjex = String.valueOf(ejex.get(i));
+            dataset.addValue(ejey.get(i), "Valor", valorEjex);
         }
         JFreeChart grafica = 
             ChartFactory.createBarChart(
@@ -150,6 +185,83 @@ public class graficar {
     
     public static void AgregarEjeXLineal(LinkedList<String> arreglo){
         ejexlineal=(LinkedList<String>) arreglo;
+    }
+    
+    public static void AgregarValoresHistograma(LinkedList<Double> arreglo){
+        valoresHistograma=(LinkedList<Double>) arreglo;
+    }
+    public static void AgregarFrecuenciaHistograma(LinkedList<Double> arreglo){
+        frecuenciaHistograma=(LinkedList<Double>) arreglo;
+    }
+    
+    public static void AgregarFrecuenciaAcumuladaHistograma(LinkedList<Double> arreglo){
+        frecuenciaAcumulada=(LinkedList<Double>) arreglo;
+    }
+    
+    public static void AgregarFrecuenciaRelativaHistograma(LinkedList<Integer> arreglo){
+        frecuenciaRelativa=(LinkedList<Integer>) arreglo;
+    }
+    
+    public static LinkedList<Double> crearValores(LinkedList<String> arreglo) {
+        LinkedList<Double> lista = new LinkedList<>();
+        LinkedList<Double> lista_valores = new LinkedList<>();
+        for(int i = 0; i < arreglo.size(); i++) {
+            Double valor = Double.parseDouble(arreglo.get(i));
+            lista.add(valor);
+        }
+        for(int i = 0; i < lista.size(); i++) {
+            if(lista_valores.isEmpty()){
+                lista_valores.add(lista.get(i));
+            }
+            else{
+                if(!(lista_valores.contains(lista.get(i)))){
+                    lista_valores.add(lista.get(i));
+                }
+            }
+        }
+        return lista_valores;
+    }
+    
+    public static LinkedList<Double> frecuencia(LinkedList<Double> valores,LinkedList<String> arreglo){
+        LinkedList<Double> lista = new LinkedList<>();
+        LinkedList<Double> lista_valores = new LinkedList<>();
+        for(int i = 0; i < arreglo.size(); i++) {
+            Double valor = Double.parseDouble(arreglo.get(i));
+            lista.add(valor);
+        }
+        for(int i = 0; i < valores.size(); i++) {
+            double suma=0;
+            for(int j = 0; j < lista.size(); j++) {
+                if(Objects.equals(valores.get(i), lista.get(j))){
+                    suma=suma+1;
+                }
+            }
+            lista_valores.add(suma); 
+        }
+      return lista_valores;
+    }
+    
+    public static LinkedList<Double> frecuenciaAcumuladaHistograma(LinkedList<Double> valores){
+        LinkedList<Double> lista = new LinkedList<>();
+        double suma=0;
+        for(int i = 0; i < valores.size(); i++) {
+            suma=suma+valores.get(i);
+            lista.add(suma);
+        }
+      return lista;
+    }
+    
+    public static LinkedList<Integer> frecuenciaRelativaHistograma(LinkedList<Double> valores,LinkedList<String> arreglo){
+        LinkedList<Integer> lista = new LinkedList<>();
+        int suma=0;
+        for(int i = 0; i < valores.size(); i++) {
+            suma=(int)Math.round((valores.get(i)/arreglo.size())*100);
+            lista.add(suma);
+        }
+      return lista;
+    }
+    public static void AgregarTituloHistograma(String valor){
+        tituloHistograma=valor;
     }
     
 }
