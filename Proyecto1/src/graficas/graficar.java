@@ -31,6 +31,7 @@ public class graficar {
     public static String tituloHistograma = "";
     public static String tituloHistogramaX = " ";
     public static String tituloHistogramaY= " ";
+    public static String cadenaAnalizar="";
     
     
     public static void barras(
@@ -262,6 +263,11 @@ public class graficar {
     }
     public static void AgregarTituloHistograma(String valor){
         tituloHistograma=valor;
+    }
+    
+    public static void CrearAnalizadores(){
+       
+       proyecto1.Proyecto1.analizadores("src/compi/", "Lexer.jflex", "Parser.cup");
     }
     
 }

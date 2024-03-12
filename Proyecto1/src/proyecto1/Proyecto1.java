@@ -14,6 +14,8 @@ public class Proyecto1 {
 
     public static void main(String[] args) {
         //analizadores("src/compi/", "Lexer.jflex", "Parser.cup");
+        ventana entorno= new ventana();
+        entorno.setVisible(true);
         String entrada = """
                      PROGRAM
                         graphPie(
@@ -76,7 +78,7 @@ public class Proyecto1 {
                      ENDPROGRAM
                     """;
         
-        analizar(entrada);
+        //analizar(entrada);
         
     }
     
