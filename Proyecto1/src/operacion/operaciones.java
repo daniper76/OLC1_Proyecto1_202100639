@@ -4,10 +4,8 @@
  */
 package operacion;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Map;
+
 
 /**
  *
@@ -48,102 +46,126 @@ public class operaciones {
     }
     
        public static String Media(LinkedList<String> listaDatos) {
-        Double suma = 0.0;
-        for (String str : listaDatos) {
-            Double numero = Double.parseDouble(str);
-            suma += numero;
+        double[] datos = new double[listaDatos.size()];
+        double total=0;
+        String media="";
+        for (int i = 0; i < listaDatos.size(); i++) {
+            datos[i] = Double.parseDouble(listaDatos.get(i));
         }
-        double resultado=suma / listaDatos.size();
-        return String.valueOf(resultado);
+        for (int j=0; j<listaDatos.size();j++){
+            total=total+datos[j];
+        }
+        media=String.valueOf(total/listaDatos.size());
+        return media;
     }
     
     public static String Mediana(LinkedList<String> listaDatos) {
-        LinkedList<Double> listaNumeros = new LinkedList<>();
-        for (String str : listaDatos) {
-            Double numero = Double.parseDouble(str); // Convertir String a Double
-            listaNumeros.add(numero);
+        double[] datos = new double[listaDatos.size()];
+        for (int i = 0; i < listaDatos.size(); i++) {
+            datos[i] = Double.parseDouble(listaDatos.get(i));
         }
-        Collections.sort(listaNumeros); // Ordenar la lista de Doubles
-
-        int tamanio = listaNumeros.size();
-        if (tamanio % 2 == 0) {
-            return String.valueOf((listaNumeros.get(tamanio / 2 - 1) + listaNumeros.get(tamanio / 2)) / 2.0); // Mediana de elementos pares
-        } else {
-            return String.valueOf(listaNumeros.get(tamanio / 2)); // Mediana de elementos impares
-        }
+            double temp;
+            for(int i=1; i<listaDatos.size();i++){
+                for(int j=0;j<listaDatos.size()-i;j++){
+                    if(datos[j]>datos[j+1]){
+                        temp=datos[j];
+                        datos[j]=datos[j+1];
+                        datos[j+1]=temp;
+                    }
+                }
+            
+            }
+            double desicion_mediana=listaDatos.size()%2;
+            if (desicion_mediana==0){
+                int valor_medio=(listaDatos.size())/2;
+                double mediana=((datos[valor_medio-1]+datos[valor_medio])/2);
+                return String.valueOf(mediana);
+            
+            }
+            else{
+                int posicion_media=listaDatos.size()/2;
+                double mediana=datos[posicion_media];
+                return String.valueOf(mediana);
+            }
         
     }
     
-    public static String Moda(LinkedList<String> listaDeStrings) {
-        Map<Double, Integer> frecuencia = new HashMap<>();
-        for (String str : listaDeStrings) {
-            Double numero = Double.parseDouble(str);
-            if (frecuencia.containsKey(numero)) {
-                frecuencia.put(numero, frecuencia.get(numero) + 1);
-            } else {
-                frecuencia.put(numero, 1);
-            }
+    public static String Moda(LinkedList<String> listaDatos) {
+        double[] datos = new double[listaDatos.size()];
+        for (int i = 0; i < listaDatos.size(); i++) {
+            datos[i] = Double.parseDouble(listaDatos.get(i));
         }
-        Double moda = null;
-        int maxFrecuencia = 0;
-        for (Map.Entry<Double, Integer> entry : frecuencia.entrySet()) {
-            if (entry.getValue() > maxFrecuencia) {
-                moda = entry.getKey();
-                maxFrecuencia = entry.getValue();
+        double temporal;
+        double moda=0;
+        int contador_dato=0;
+            
+            for (int j=0; j<listaDatos.size(); j++){
+                temporal=datos[j];
+                int contador=0;
+                for(int k=0; k<listaDatos.size();k++){
+                    if (temporal==datos[k]){
+                    contador=contador+1;
+                    }
+                }
+                if (contador>contador_dato){
+                    moda=temporal;
+                    contador_dato=contador;
+                }
             }
-        }
-        return String.valueOf(moda);
+           return String.valueOf(moda);
+        
     } 
 
-    public static String Varianza(LinkedList<String> listaDeStrings) {
-        int n = listaDeStrings.size();
-        double suma = 0.0;
-        double media = 0.0;
-        // Calcular la media
-        for (String str : listaDeStrings) {
-            Double numero = Double.parseDouble(str);
-            suma += numero;
+    public static String Varianza(LinkedList<String> lista_datos) {
+        double[] datos = new double[lista_datos.size()];
+        double total=0;
+        for (int i = 0; i < lista_datos.size(); i++) {
+            datos[i] = Double.parseDouble(lista_datos.get(i));
         }
-        media = suma / n;
-
-        // Calcular la suma de los cuadrados de las diferencias
-        double sumaCuadradosDiferencias = 0.0;
-        for (String str : listaDeStrings) {
-            Double numero = Double.parseDouble(str);
-            sumaCuadradosDiferencias += Math.pow(numero - media, 2);
+        for (int j=0; j<lista_datos.size();j++){
+            total=total+datos[j];
         }
-
-        // Calcular la varianza
-        Double varianza = sumaCuadradosDiferencias / n;
+        double media=total/lista_datos.size();
+        
+        double serie=0;
+        for(int j=0; j<lista_datos.size();j++){
+            double temporal=datos[j]-media;
+            double suma=temporal*temporal;
+            serie=serie+suma; 
+            }
+        double varianza=serie/lista_datos.size();
         return String.valueOf(varianza);
+        
+        
     }
     
-    public static String Menor(LinkedList<String> listaDeStrings){
-            
-        Double numeroMasPequenio = Double.MAX_VALUE; // Inicializar con un valor muy grande
-
-        for (String str : listaDeStrings) {
-            Double numero = Double.parseDouble(str);
-            if (numero < numeroMasPequenio) {
-                numeroMasPequenio = numero;
+    public static String Menor(LinkedList<String> listaDatos){
+        double[] datos = new double[listaDatos.size()];
+        for (int i = 0; i < listaDatos.size(); i++) {
+            datos[i] = Double.parseDouble(listaDatos.get(i));
+        }
+        double menor=datos[0];
+        for (int j=0;j<listaDatos.size();j++){
+            if (menor>datos[j]){
+                menor=datos[j];
             }
         }
-
-        return String.valueOf(numeroMasPequenio);
+        return String.valueOf(menor);
     }
     
     
-    public static String Mayor(LinkedList<String> listaDeStrings) {
-        Double numeroMasGrande = Double.MIN_VALUE; // Inicializar con un valor muy pequeño
-
-        for (String str : listaDeStrings) {
-            Double numero = Double.parseDouble(str);
-            if (numero > numeroMasGrande) {
-                numeroMasGrande = numero;
+    public static String Mayor(LinkedList<String> listaDatos) {
+        double[] datos = new double[listaDatos.size()];
+        for (int i = 0; i < listaDatos.size(); i++) {
+            datos[i] = Double.parseDouble(listaDatos.get(i));
+        }
+        double mayor=datos[0];
+        for (int j=0;j<listaDatos.size();j++){
+            if (mayor<datos[j]){
+                mayor=datos[j];
             }
         }
-
-        return String.valueOf(numeroMasGrande);
-    }
+        return String.valueOf(mayor);
      
+}
 }

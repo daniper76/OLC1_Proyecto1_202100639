@@ -4,12 +4,14 @@
  */
 package proyecto1;
 
-import java.io.BufferedReader;
+
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+
 import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -20,10 +22,43 @@ public class ventana extends javax.swing.JFrame {
     /**
      * Creates new form ventana
      */
+    JFileChooser seleccionar=new JFileChooser();
+    File archivo;
+    FileInputStream entrada;
+    FileOutputStream salida;
     public ventana() {
         initComponents();
     }
 
+    public String Abrir(File archivo){
+        String documento="";
+        try{
+            entrada=new FileInputStream(archivo);
+            int ascci;
+            while((ascci=entrada.read())!=-1){
+                char caracter=(char)ascci;
+                documento+=caracter;
+            }   
+        }catch(Exception e){
+        }
+        return documento;
+    }
+    
+    public String Guardar(File archivo,String documento){
+        String mensaje=null;
+        try{
+            salida=new FileOutputStream(archivo);
+            byte[] bytxt=documento.getBytes();
+            salida.write(bytxt);
+            mensaje="Archivo Alcanzado con Exito";
+        }catch (Exception e){
+        
+        }
+        return mensaje;
+    }
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -116,38 +151,19 @@ public class ventana extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
-        JFileChooser fileChooser = new JFileChooser();
-
-        // Establecer el filtro para seleccionar solo archivos de texto
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos de texto", "df");
-        fileChooser.setFileFilter(filter);
-
-        // Mostrar el diálogo de selección de archivo
-        int result = fileChooser.showOpenDialog(null);
-
-        // Verificar si el usuario ha seleccionado un archivo
-        if (result == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-
-            // Leer el contenido del archivo y mostrarlo en un JTextArea
-            try (BufferedReader reader = new BufferedReader(new FileReader(selectedFile))) {
-                String linea="";
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    linea=linea+line+"\n";
-                }
-                graficas.graficar.cadenaAnalizar=linea;
-                jTextArea1.setText(graficas.graficar.cadenaAnalizar);
-                jTextArea1.setEditable(true);
-
-    
-            } catch (IOException e) {
-                e.printStackTrace();
+    if(seleccionar.showDialog(null,"Abrir")==JFileChooser.APPROVE_OPTION){
+        archivo=seleccionar.getSelectedFile();
+        if(archivo.canRead()){
+            if(archivo.getName().endsWith("df")){
+                String documento=Abrir(archivo);
+                jTextArea1.setText(documento);
             }
-        } else {
-            System.out.println("Selección de archivo cancelada.");
+            else
+            {
+                JOptionPane.showMessageDialog(null,"Archivo no aceptado");
+            }
         }
+    }   
     
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
