@@ -131,12 +131,12 @@ expresion ::= ENTERO:val {:RESULT=val.toString();:}
              |MULTIPLICAR PARIZQ expresion:val1 COMA expresion:val2 PARDER {: RESULT=operacion.operaciones.Multiplicar(val1.toString(), val2.toString()); :} 
              |DIVIDIR PARIZQ expresion:val1 COMA expresion:val2 PARDER {: RESULT=operacion.operaciones.Dividir(val1.toString(), val2.toString()); :}
              |MODULO PARIZQ expresion:val1 COMA expresion:val2 PARDER {: RESULT=operacion.operaciones.Modulo(val1.toString(), val2.toString()); :} 
-             |MEDIA PARIZQ CORA datos:lista CORC PARDER {: RESULT=operacion.operaciones.Media((LinkedList<String>)lista); :}
-             |MEDIANA PARIZQ CORA datos:lista CORC PARDER {: RESULT=operacion.operaciones.Mediana((LinkedList<String>)lista); :}
-             |MODA PARIZQ CORA datos:lista CORC PARDER {: RESULT=operacion.operaciones.Moda((LinkedList<String>)lista); :}
-             |VARIANZA PARIZQ CORA datos:lista CORC PARDER {: RESULT=operacion.operaciones.Varianza((LinkedList<String>)lista); :}
-             |MAYOR PARIZQ CORA datos:lista CORC PARDER {: RESULT=operacion.operaciones.Mayor((LinkedList<String>)lista); :}
-             |MENOR PARIZQ CORA datos:lista CORC PARDER {: RESULT=operacion.operaciones.Menor((LinkedList<String>)lista); :}
+             |MEDIA PARIZQ listaarreglo:lista PARDER {: RESULT=operacion.operaciones.Media((LinkedList<String>)lista); :}
+             |MEDIANA PARIZQ listaarreglo:lista PARDER {: RESULT=operacion.operaciones.Mediana((LinkedList<String>)lista); :}
+             |MODA PARIZQ listaarreglo:lista PARDER {: RESULT=operacion.operaciones.Moda((LinkedList<String>)lista); :}
+             |VARIANZA PARIZQ listaarreglo:lista PARDER {: RESULT=operacion.operaciones.Varianza((LinkedList<String>)lista); :}
+             |MAYOR PARIZQ listaarreglo:lista PARDER {: RESULT=operacion.operaciones.Mayor((LinkedList<String>)lista); :}
+             |MENOR PARIZQ listaarreglo:lista PARDER {: RESULT=operacion.operaciones.Menor((LinkedList<String>)lista); :}
 ;
 
 imprimir::= CONSOLE DOSPUNTOS DOSPUNTOS PRINT IGUAL listaexpresiones:lista END PYC 

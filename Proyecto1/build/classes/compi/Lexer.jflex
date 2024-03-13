@@ -21,7 +21,7 @@ import java_cup.runtime.*;
 // ------> Expresiones Regulares 
 
 
-entero = [0-9]+
+entero = [0-9]+|[0-9]+[.][0-9]+
 cadena = [\"][^\n\"]*[\"]
 id = [a-zA-Z][a-zA-Z0-9_]*
 comentario = ["#"][^\n]*[\n]
