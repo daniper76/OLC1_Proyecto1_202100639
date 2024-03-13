@@ -32,6 +32,7 @@ public class graficar {
     public static String tituloHistogramaX = " ";
     public static String tituloHistogramaY= " ";
     public static String cadenaAnalizar="";
+    public static String cadenaConsola="";
     
     
     public static void barras(
@@ -268,6 +269,32 @@ public class graficar {
     public static void CrearAnalizadores(){
        
        proyecto1.Proyecto1.analizadores("src/compi/", "Lexer.jflex", "Parser.cup");
+    }
+    
+    public static void reporteHistograma(LinkedList<Double> lista_valores,LinkedList<Double> lista_frecuencia,LinkedList<Double> lista_frecuencia_acumulada, LinkedList<Integer> lista_frecuencia_relativa){
+        String texto="Analisis de Arreglo\n";
+        texto=texto+"Valor    Fb      Fa      Fr\n";
+         for(int i = 0; i < lista_valores.size(); i++) {
+            texto=texto+String.valueOf(lista_valores.get(i))+"     ";
+            texto=texto+String.valueOf(lista_frecuencia.get(i))+"     ";
+            texto=texto+String.valueOf(lista_frecuencia_acumulada.get(i))+"     ";
+            texto=texto+String.valueOf(lista_frecuencia_relativa.get(i))+"     ";
+            texto=texto+"\n";
+             System.out.println("se ejecuta reporte histograma");
+        }
+        texto=texto+"Totales"+"     "+String.valueOf(lista_valores.size())+"     "+String.valueOf(lista_valores.size());
+        crearCadenaConsola(texto);
+    }
+    
+    public static void crearCadenaConsola(String cadena){
+        cadenaConsola=cadenaConsola+cadena+"\n";
+    }
+    public static void crearCadenaLista(LinkedList<String> lista){
+        lista.forEach((element) -> {
+            System.out.println(element);
+            System.out.println("estoy imprimiendo");
+            crearCadenaConsola(element);
+        });
     }
     
 }

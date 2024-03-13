@@ -30,6 +30,7 @@ public class instruccion {
     public static void mostrarLista(LinkedList<String> lista){
         lista.forEach((element) -> {
             System.out.println(element);
+            graficas.graficar.crearCadenaConsola(element);
         });
-    }
+    } 
 }

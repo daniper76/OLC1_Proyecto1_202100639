@@ -33,7 +33,7 @@ action code
 //------> Declaración de terminales
 terminal String RPRINT;
 terminal String EXCL, PARDER, PARIZQ, PYC;
-terminal String ENTERO, CADENA, MAS, ID, COMA, IGUAL;
+terminal String ENTERO, CADENA, ID, COMA, IGUAL;
 terminal String PROGRAM, ENDPROGRAM, VAR, DOSPUNTOS, DOUBLE, CHAR;
 terminal String FLECHA, FLECHADERECHA, GUION, END;
 terminal String ARR, ARROBA,CORA,CORC,SUMA;
@@ -66,8 +66,7 @@ inicio ::= PROGRAM lista_instrucciones ENDPROGRAM
 lista_instrucciones ::= lista_instrucciones instruccion |
                       instruccion 
 ;
-instruccion ::= print|
-                variable|
+instruccion ::= variable|
                 conjunto|
                 imprimir|
                 graficar|
@@ -121,10 +120,7 @@ variable ::= VAR DOSPUNTOS tipo DOSPUNTOS DOSPUNTOS ID:variable FLECHA GUION exp
 tipo::= DOUBLE {:RESULT="double";:}
         |CHAR {:RESULT="char";:}
 ;
-print::= RPRINT EXCL PARIZQ expresion:val PARDER PYC {: System.out.println(val); :}
-         | RPRINT EXCL PARIZQ ARROBA ID:clave PARDER PYC {: instrucciones.instruccion.mostrarLista((LinkedList<String>) instrucciones.instruccion.ObtenerArreglo(clave)); :}
 
-;
 expresion ::= ENTERO:val {:RESULT=val.toString();:}
              |CADENA:val {:RESULT=val.toString();:}
              |ID:val            {: RESULT = instrucciones.instruccion.ObtenerVariable(val.toString()); :}
@@ -142,11 +138,16 @@ expresion ::= ENTERO:val {:RESULT=val.toString();:}
 ;
 
 imprimir::= CONSOLE DOSPUNTOS DOSPUNTOS PRINT IGUAL listaexpresiones:lista END PYC 
-            {: instrucciones.instruccion.mostrarLista((LinkedList<String>) lista); :}
+            {: 
+              graficas.graficar.crearCadenaLista((LinkedList<String>) lista);
+              instrucciones.instruccion.mostrarLista((LinkedList<String>) lista); :}
             | CONSOLE DOSPUNTOS DOSPUNTOS COLUMNA IGUAL expresion:val GUION FLECHADERECHA listaarreglo:lista END PYC 
             {: 
                System.out.println(val);
+               graficas.graficar.crearCadenaConsola(val.toString());
                System.out.println("------------------------");
+               graficas.graficar.crearCadenaConsola("------------------------------");
+               graficas.graficar.crearCadenaLista((LinkedList<String>) lista);
                instrucciones.instruccion.mostrarLista((LinkedList<String>) lista); 
             :}
             |error PYC
@@ -185,6 +186,7 @@ graficar::= BARRAS PARIZQ sentencias EXEC GRAPBAR END PYC PARDER END PYC
         | HISTOGRAMA PARIZQ sentenciashisto EXEC HISTOGRAMA END PYC PARDER END PYC
         {:
         graficas.graficar.histograma(graficas.graficar.tituloHistograma,graficas.graficar.tituloHistogramaX, graficas.graficar.tituloHistogramaY, graficas.graficar.frecuenciaHistograma, graficas.graficar.valoresHistograma);
+        graficas.graficar.reporteHistograma(graficas.graficar.valoresHistograma,graficas.graficar.frecuenciaHistograma,graficas.graficar.frecuenciaAcumulada,graficas.graficar.frecuenciaRelativa);
         :}
         |error PYC
 ;

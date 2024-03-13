@@ -81,7 +81,6 @@ multicomentario = ["<"]["!"][^]*["!"][">"]
 ";"         {return new Symbol(sym.PYC, yycolumn, yyline, yytext());}
 ","         {return new Symbol(sym.COMA, yycolumn, yyline, yytext());}
 "="         {return new Symbol(sym.IGUAL, yycolumn, yyline, yytext());}
-"+"         {return new Symbol(sym.MAS, yycolumn, yyline, yytext());}
 {entero}    {Tokens.tokens.GuardarTokes(String.valueOf(yytext()),"double",String.valueOf(yycolumn),String.valueOf(yyline)); return new Symbol(sym.ENTERO, yycolumn, yyline, yytext()); }
 {cadena}    {Tokens.tokens.GuardarTokes(String.valueOf(yytext()),"string",String.valueOf(yycolumn),String.valueOf(yyline)); return new Symbol(sym.CADENA, yycolumn, yyline, yytext());}
 {id}        {Tokens.tokens.GuardarTokes(String.valueOf(yytext()),"id",String.valueOf(yycolumn),String.valueOf(yyline)); return new Symbol(sym.ID, yycolumn, yyline, yytext());}
