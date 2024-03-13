@@ -49,7 +49,7 @@ non terminal inicio;
 non terminal instruccion, expresion;
 non terminal lista_instrucciones, print, variable,conjunto,elementos, tipo;
 non terminal datos, imprimir, listaexpresiones, listaarreglo,graficar,sentencias,linea,sentenciaspie,lineapie;
-non terminal sentenciaslineal,linealineal,sentenciashisto,lineahisto;
+non terminal sentenciaslineal,linealineal,sentenciashisto,lineahisto,listagraficar;
 precedence left MAS;
 
 //------> Definir Simbolo Inicial
@@ -190,8 +190,8 @@ sentencias::= sentencias linea
 ;
 
 linea::= TITULO DOSPUNTOS DOSPUNTOS CHAR IGUAL expresion:title END PYC {: graficas.graficar.AgregarTituloBarras(title.toString()); :}
-        | EJEX DOSPUNTOS DOSPUNTOS CHAR IGUAL CORA listaexpresiones:lista CORC END PYC {: graficas.graficar.AgregarEjeXBarras((LinkedList<String>) lista); :}
-        | EJEY DOSPUNTOS DOSPUNTOS DOUBLE IGUAL CORA listaexpresiones:lista CORC END PYC {: graficas.graficar.AgregarEjeYBarras((LinkedList<String>) lista); :}
+        | EJEX DOSPUNTOS DOSPUNTOS CHAR IGUAL listagraficar:lista END PYC {: graficas.graficar.AgregarEjeXBarras((LinkedList<String>) lista); :}
+        | EJEY DOSPUNTOS DOSPUNTOS DOUBLE IGUAL listagraficar:lista END PYC {: graficas.graficar.AgregarEjeYBarras((LinkedList<String>) lista); :}
         | TITULOX DOSPUNTOS DOSPUNTOS CHAR IGUAL expresion:entrada END PYC {: graficas.graficar.AgregarTituloXBarras(entrada.toString()); :}
         | TITULOY DOSPUNTOS DOSPUNTOS CHAR IGUAL expresion:valor END PYC {: graficas.graficar.AgregarTituloYBarras(valor.toString()); :}
 ;
@@ -200,8 +200,8 @@ sentenciaspie::=sentenciaspie lineapie
                |lineapie
 ;
 
-lineapie::= LABEL DOSPUNTOS DOSPUNTOS CHAR IGUAL CORA listaexpresiones:lista CORC END PYC {: graficas.graficar.AgregarLabelsPie((LinkedList<String>) lista); :}
-        | VALUES DOSPUNTOS DOSPUNTOS DOUBLE IGUAL CORA listaexpresiones:lista CORC END PYC {: graficas.graficar.AgregarValoresPie((LinkedList<String>) lista); :}
+lineapie::= LABEL DOSPUNTOS DOSPUNTOS CHAR IGUAL listagraficar:lista END PYC {: graficas.graficar.AgregarLabelsPie((LinkedList<String>) lista); :}
+        | VALUES DOSPUNTOS DOSPUNTOS DOUBLE IGUAL listagraficar:lista END PYC {: graficas.graficar.AgregarValoresPie((LinkedList<String>) lista); :}
         | TITULO DOSPUNTOS DOSPUNTOS CHAR IGUAL expresion:entrada END PYC {: graficas.graficar.AgregarTituloPie(entrada.toString()); :}
 ;
 
@@ -210,8 +210,8 @@ sentenciaslineal::=sentenciaslineal linealineal
 ;
 
 linealineal::= TITULO DOSPUNTOS DOSPUNTOS CHAR IGUAL expresion:title END PYC {: graficas.graficar.AgregarTituloLineal(title.toString());  :}
-        | EJEX DOSPUNTOS DOSPUNTOS CHAR IGUAL CORA listaexpresiones:lista CORC END PYC {: graficas.graficar.AgregarEjeXLineal((LinkedList<String>) lista); :}
-        | EJEY DOSPUNTOS DOSPUNTOS DOUBLE IGUAL CORA listaexpresiones:lista CORC END PYC {: graficas.graficar.AgregarEjeYLineal((LinkedList<String>) lista); :}
+        | EJEX DOSPUNTOS DOSPUNTOS CHAR IGUAL listagraficar:lista END PYC {: graficas.graficar.AgregarEjeXLineal((LinkedList<String>) lista); :}
+        | EJEY DOSPUNTOS DOSPUNTOS DOUBLE IGUAL listagraficar:lista END PYC {: graficas.graficar.AgregarEjeYLineal((LinkedList<String>) lista); :}
         | TITULOX DOSPUNTOS DOSPUNTOS CHAR IGUAL expresion:entrada END PYC {: graficas.graficar.AgregarTituloXLineal(entrada.toString()); :}
         | TITULOY DOSPUNTOS DOSPUNTOS CHAR IGUAL expresion:valor END PYC {: graficas.graficar.AgregarTituloYLineal(valor.toString()); :}
 ;
@@ -220,7 +220,7 @@ sentenciashisto::=sentenciashisto lineahisto
                |lineahisto
 ;
 
-lineahisto::= VALUES DOSPUNTOS DOSPUNTOS CHAR IGUAL CORA listaexpresiones:lista CORC END PYC 
+lineahisto::= VALUES DOSPUNTOS DOSPUNTOS CHAR IGUAL listagraficar:lista END PYC 
         {: 
             graficas.graficar.AgregarValoresHistograma((LinkedList<Double>) graficas.graficar.crearValores((LinkedList<String>)lista));
             graficas.graficar.AgregarFrecuenciaHistograma((LinkedList<Double>) graficas.graficar.frecuencia((LinkedList<Double>) graficas.graficar.valoresHistograma,(LinkedList<String>) lista));
@@ -228,4 +228,9 @@ lineahisto::= VALUES DOSPUNTOS DOSPUNTOS CHAR IGUAL CORA listaexpresiones:lista 
             graficas.graficar.AgregarFrecuenciaRelativaHistograma((LinkedList<Integer>) graficas.graficar.frecuenciaRelativaHistograma((LinkedList<Double>) graficas.graficar.frecuenciaHistograma,(LinkedList<String>)lista) );
         :}
         | TITULO DOSPUNTOS DOSPUNTOS CHAR IGUAL expresion:entrada END PYC {: graficas.graficar.AgregarTituloHistograma(entrada.toString()); :}
+;
+
+listagraficar::= ARROBA ID:clave {: RESULT= (LinkedList<String>) instrucciones.instruccion.ObtenerArreglo(clave); :}
+             | CORA listaexpresiones:lista CORC {: RESULT=(LinkedList<String>) lista; :}
+
 ;

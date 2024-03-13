@@ -31,7 +31,7 @@ comentario = ["#"][^\n]*[\n]
 %%
 // ------------  Reglas Lexicas -------------------
 "program"   {return new Symbol(sym.PROGRAM, yycolumn, yyline, yytext());}
-"endprogram"  {return new Symbol(sym.ENDPROGRAM, yycolumn, yyline, yytext());}
+"end program"  {return new Symbol(sym.ENDPROGRAM, yycolumn, yyline, yytext());}
 "arr"        {return new Symbol(sym.ARR, yycolumn, yyline, yytext());}
 "@"          {return new Symbol(sym.ARROBA, yycolumn, yyline, yytext());}
 "println"   {return new Symbol(sym.RPRINT, yycolumn, yyline, yytext());}
