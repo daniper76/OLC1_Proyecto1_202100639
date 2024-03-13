@@ -933,7 +933,7 @@ public class Lexer implements java_cup.runtime.Scanner {
           // fall through
           case 65: break;
           case 9:
-            { return new Symbol(sym.ENTERO, yycolumn, yyline, yytext());
+            { Tokens.tokens.GuardarTokes(String.valueOf(yytext()),"double",String.valueOf(yycolumn),String.valueOf(yyline)); return new Symbol(sym.ENTERO, yycolumn, yyline, yytext());
             }
           // fall through
           case 66: break;
@@ -968,7 +968,7 @@ public class Lexer implements java_cup.runtime.Scanner {
           // fall through
           case 72: break;
           case 16:
-            { return new Symbol(sym.ID, yycolumn, yyline, yytext());
+            { Tokens.tokens.GuardarTokes(String.valueOf(yytext()),"id",String.valueOf(yycolumn),String.valueOf(yyline)); return new Symbol(sym.ID, yycolumn, yyline, yytext());
             }
           // fall through
           case 73: break;
@@ -988,7 +988,7 @@ public class Lexer implements java_cup.runtime.Scanner {
           // fall through
           case 76: break;
           case 20:
-            { return new Symbol(sym.CADENA, yycolumn, yyline, yytext());
+            { Tokens.tokens.GuardarTokes(String.valueOf(yytext()),"string",String.valueOf(yycolumn),String.valueOf(yyline)); return new Symbol(sym.CADENA, yycolumn, yyline, yytext());
             }
           // fall through
           case 77: break;

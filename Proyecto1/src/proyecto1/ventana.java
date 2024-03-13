@@ -8,6 +8,9 @@ package proyecto1;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -123,7 +126,12 @@ public class ventana extends javax.swing.JFrame {
 
         jMenu4.setText("Reporte");
 
-        jMenuItem2.setText("jMenuItem2");
+        jMenuItem2.setText("Generar Reporte");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem2);
 
         jMenuBar1.add(jMenu4);
@@ -177,6 +185,15 @@ public class ventana extends javax.swing.JFrame {
         graficas.graficar.cadenaAnalizar=jTextArea1.getText();
         proyecto1.Proyecto1.analizar(graficas.graficar.cadenaAnalizar);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        try {
+            // TODO add your handling code here:
+            Tokens.tokens.MostrarTokens();
+        } catch (IOException ex) {
+            Logger.getLogger(ventana.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

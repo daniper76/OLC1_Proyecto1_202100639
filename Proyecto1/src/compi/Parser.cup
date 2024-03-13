@@ -80,6 +80,7 @@ conjunto::= ARR DOSPUNTOS tipo DOSPUNTOS DOSPUNTOS ARROBA ID:variable FLECHA GUI
         instrucciones.instruccion.mostrarLista((LinkedList<String>) lista);
         instrucciones.instruccion.GuardarArreglo(variable,(LinkedList<String>) lista);
       :}
+      |error PYC
 ;
 
 elementos::= elementos:listaexp COMA expresion:exp
@@ -114,6 +115,7 @@ datos::= datos:listadatos COMA expresion:exp
 ;
 
 variable ::= VAR DOSPUNTOS tipo DOSPUNTOS DOSPUNTOS ID:variable FLECHA GUION expresion:valor END PYC {:instrucciones.instruccion.GuardarVariable(variable.toString(), valor.toString());:}
+      |error PYC
 ;
 
 tipo::= DOUBLE {:RESULT="double";:}
@@ -147,6 +149,7 @@ imprimir::= CONSOLE DOSPUNTOS DOSPUNTOS PRINT IGUAL listaexpresiones:lista END P
                System.out.println("------------------------");
                instrucciones.instruccion.mostrarLista((LinkedList<String>) lista); 
             :}
+            |error PYC
 ;
 listaarreglo::= ARROBA ID:clave {: RESULT= (LinkedList<String>) instrucciones.instruccion.ObtenerArreglo(clave); :}
              | CORA listaexpresiones:lista CORC {: RESULT=(LinkedList<String>) lista; :}
@@ -183,6 +186,7 @@ graficar::= BARRAS PARIZQ sentencias EXEC GRAPBAR END PYC PARDER END PYC
         {:
         graficas.graficar.histograma(graficas.graficar.tituloHistograma,graficas.graficar.tituloHistogramaX, graficas.graficar.tituloHistogramaY, graficas.graficar.frecuenciaHistograma, graficas.graficar.valoresHistograma);
         :}
+        |error PYC
 ;
 
 sentencias::= sentencias linea
