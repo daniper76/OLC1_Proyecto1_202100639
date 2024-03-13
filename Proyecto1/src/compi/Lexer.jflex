@@ -93,6 +93,6 @@ multicomentario = ["<"]["!"][^]*["!"][">"]
 [ \t\r\n\f]     {/* Espacios en blanco se ignoran */}
 
 //------> Errores Léxicos 
-.           	{ System.out.println("Error Lexico: " + yytext() + " | Fila:" + yyline + " | Columna: " + yycolumn); }
+.           	{ Errores.Error.GuardarError(String.valueOf(yytext()),"Error Léxico: Carácter no reconocido",String.valueOf(yycolumn),String.valueOf(yyline)); System.out.println("Error Lexico: " + yytext() + " | Fila:" + yyline + " | Columna: " + yycolumn); }
 
 

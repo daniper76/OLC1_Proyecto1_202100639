@@ -193,6 +193,12 @@ public class ventana extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(ventana.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        try {
+            Errores.Error.MostrarErrores();
+        } catch (IOException ex) {
+            Logger.getLogger(ventana.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
 
