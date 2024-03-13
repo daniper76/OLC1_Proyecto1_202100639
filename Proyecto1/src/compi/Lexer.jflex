@@ -24,7 +24,8 @@ import java_cup.runtime.*;
 entero = [0-9]+|[0-9]+[.][0-9]+
 cadena = [\"][^\n\"]*[\"]
 id = [a-zA-Z][a-zA-Z0-9_]*
-comentario = ["#"][^\n]*[\n]
+comentario = ["!"][^\n]*[\n]
+multicomentario = ["<"]["!"][^]*["!"][">"]
 
 
 
@@ -85,6 +86,7 @@ comentario = ["#"][^\n]*[\n]
 {cadena}    {return new Symbol(sym.CADENA, yycolumn, yyline, yytext());}
 {id}        {return new Symbol(sym.ID, yycolumn, yyline, yytext());}
 {comentario} {}
+{multicomentario} {}
 
 
 //------> Ingorados 
