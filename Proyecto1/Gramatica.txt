@@ -1,0 +1,79 @@
+<inicio> ::= PROGRAM <listaDeInstrucciones> ENDPROGRAM
+
+
+<listaDeInstrucciones> ::= <listaDeInstrucciones> <instruccion> | <instruccion> 
+
+<instruccion> ::= <variables>|<arreglos>| <imprimir>| <graficar> | <error>;
+
+<variables> ::= var::<tipo>::<idDeVariable> <- <expresion> end;
+      |<error>;
+
+<arreglos> ::= arr : <tipo> :: @ <idDeVariable> <- [ <elementos> ] end; |<error>;
+
+<elementos>::= <elementos> , <expresion>
+            | <expresion>
+
+<imprimir> ::= console :: print = <listaDeExpresiones> end; | console :: column = <expresion> -> <listaArreglo> end; |<error>;
+
+<listaDeExpresiones>::= <listaDeExpresiones> ,<expresion> | <expresion>
+
+<listaArreglo>::= @ <idDeVariable> | [ <listaexpresiones> ]
+
+<graficar> ::= graphBar ( <sentencias> EXEC graphBar end;) end; | graphPie ( <sentenciaspie> EXEC graphPie end;) end; | graphLine ( <sentenciaslineal> EXEC graphLine end;) end; | Histogram ( <sentenciashisto> EXEC Histogram end;) end;|<error>;
+
+
+<sentencias>::= <sentencias> <linea>
+            |<linea> 
+
+<linea>::= titulo :: char[] = <expresion> end ;
+        | ejeX :: char[] = <listagraficar> end ;
+        | ejeY::double = <listagraficar> end; 
+        | tituloX::char[] = <expresion> end;
+        | tituloY::char[] = <expresion> end;
+
+
+<sentenciaspie>::=<sentenciaspie> <lineapie>
+               |<lineapie>
+
+<lineapie>::= label::char[] = <listagraficar> end;
+| values::double = <listagraficar> end;
+| titulo::char[] = <expresion> end;
+
+
+<sentenciaslineal>::=<sentenciaslineal> <linealineal>
+               |<linealineal>
+;
+
+<linealineal>::= titulo::char[] = <expresion> end;
+        | ejeX::char[] = <listagraficar> end;
+        | ejeY::double= <listagraficar> end;
+        | tituloX::char[] = <expresion> end;
+        | tituloY::char[] = <expresion> end;
+
+<sentenciashisto>::=<sentenciashisto> <lineahisto>
+               |<lineahisto>
+;
+
+<lineahisto>::= titulo::char[] = <expresion> end;
+        | values::char[] = <listagraficar> end;
+
+
+<tipo>::= double|char[]
+
+
+<idDeVariable>::= <SimboloInicial><ContinuacionDeDeclaracion>
+<SimboloInicial>::=a|b|c|d|e|f|g|h|i|j|k|l|m|n||ñ|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|Ñ|O|P|Q|R|S|T|U|V|W|X|Y|Z
+<ContinuacionDeDeclaracion>::= <ContinuacionDeDeclaracion><SimboloInicial>|<ContinuacionDeDeclaracion><numeros>|<SimboloInicial>|<numeros>
+<numeros>::=0|1|2|3|4|5|6|7|8|9
+
+<expresion>::= <entero> |<string>|<idDeVariable>|SUM ( <expresion> , <expresion> ) |RES ( <expresion> , <expresion> )|MUL ( <expresion> , <expresion> ) |DIV ( <expresion> , <expresion> )|MOD ( <expresion> , <expresion> )|MEDIA ( <listaarreglo> )|MEDIANA( <listaarreglo> ) |MODA ( <listaarreglo> ) |VARIANZA ( <listaarreglo> ) |MAYOR ( <listaarreglo> ) |MENOR ( <listaarreglo> ) 
+
+<entero>::=<enteroOpcion>|<enteroOpcion>.<enteroOpcion>
+<enteroOpcion>::= <numeros>|<entero><numeros>|
+
+<string>::="<lista_simbolos>"
+
+<lista_simbolos>::=<lista_simbolos><SimboloInicial>|<SimboloInicial>
+
+
+

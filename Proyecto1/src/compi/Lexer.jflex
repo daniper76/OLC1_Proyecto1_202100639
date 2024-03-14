@@ -35,7 +35,6 @@ multicomentario = ["<"]["!"][^]*["!"][">"]
 "end program"  {return new Symbol(sym.ENDPROGRAM, yycolumn, yyline, yytext());}
 "arr"        {return new Symbol(sym.ARR, yycolumn, yyline, yytext());}
 "@"          {return new Symbol(sym.ARROBA, yycolumn, yyline, yytext());}
-"println"   {return new Symbol(sym.RPRINT, yycolumn, yyline, yytext());}
 "double"   {return new Symbol(sym.DOUBLE, yycolumn, yyline, yytext());}
 "char[]"     {return new Symbol(sym.CHAR, yycolumn, yyline, yytext());}
 "sum"       {return new Symbol(sym.SUMA, yycolumn, yyline, yytext());}

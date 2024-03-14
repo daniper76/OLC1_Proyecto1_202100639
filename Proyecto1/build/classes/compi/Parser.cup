@@ -31,7 +31,6 @@ action code
 
 
 //------> Declaración de terminales
-terminal String RPRINT;
 terminal String EXCL, PARDER, PARIZQ, PYC;
 terminal String ENTERO, CADENA, ID, COMA, IGUAL;
 terminal String PROGRAM, ENDPROGRAM, VAR, DOSPUNTOS, DOUBLE, CHAR;
